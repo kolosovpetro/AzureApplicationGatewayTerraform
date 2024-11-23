@@ -82,7 +82,7 @@ resource "azurerm_application_gateway" "main" {
     cookie_based_affinity = "Disabled"
     port                  = 443
     protocol              = "Https"
-    request_timeout       = 60
+    request_timeout       = 300
   }
 
   dynamic "http_listener" {
@@ -114,11 +114,26 @@ resource "azurerm_application_gateway" "main" {
       priority                   = request_routing_rule.value.priority
     }
   }
+
+  dynamic "probe" {
+    for_each = local.routing_settings
+    content {
+      name                                      = "probe-${probe.value.environment}"
+      protocol                                  = "Https"
+      path                                      = "/"
+      interval                                  = 30
+      timeout                                   = 30
+      unhealthy_threshold                       = 3
+      host                                      = probe.value.host_name
+      pick_host_name_from_backend_http_settings = false
+      match {
+        status_code = [200, 399]
+      }
+    }
+  }
 }
 
-# resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "nic-assoc" {
-#   for_each                = var.routing_settings
-#   network_interface_id    = each.value.network_interface_id
-#   ip_configuration_name   = each.value.ip_configuration_name
-#   backend_address_pool_id = one(azurerm_application_gateway.main.backend_address_pool).id
-# }
+resource "azurerm_subnet_network_security_group_association" "example_assoc" {
+  subnet_id                 = azurerm_subnet.app_gateway_subnet.id
+  network_security_group_id = azurerm_network_security_group.public.id
+}

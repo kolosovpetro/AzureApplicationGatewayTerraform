@@ -22,6 +22,7 @@ locals {
 
   routing_settings = [
     {
+      environment                = "dev"
       request_routing_rule_name  = "rule-dev"
       rule_type                  = "Basic"
       http_listener_name         = "http-listener-dev"
@@ -31,6 +32,7 @@ locals {
       host_name                  = "ase-dev-${var.prefix}.azurewebsites.net"
     },
     {
+      environment                = "qa"
       request_routing_rule_name  = "rule-qa"
       rule_type                  = "Basic"
       http_listener_name         = "http-listener-qa"
