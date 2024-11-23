@@ -1,3 +1,9 @@
 # Azure Application Gateway
 
-- https://agwy.test.razumovsky.me
+## DEV
+
+- https://agwy.dev.razumovsky.me
+
+## QA
+
+- https://agwy.qa.razumovsky.me

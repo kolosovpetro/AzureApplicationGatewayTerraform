@@ -73,7 +73,7 @@ resource "azurerm_application_gateway" "main" {
     for_each = local.routing_settings
     content {
       name = backend_address_pool.value.backend_address_pool_name
-      fqdns = [backend_address_pool.value.host_name]
+      fqdns = [backend_address_pool.value.default_host_name]
     }
   }
 
@@ -124,7 +124,7 @@ resource "azurerm_application_gateway" "main" {
       interval                                  = 30
       timeout                                   = 30
       unhealthy_threshold                       = 3
-      host                                      = probe.value.host_name
+      host                                      = probe.value.default_host_name
       pick_host_name_from_backend_http_settings = false
       match {
         status_code = [200, 399]
