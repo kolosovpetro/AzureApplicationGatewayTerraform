@@ -141,6 +141,22 @@ resource "azurerm_application_gateway" "main" {
     }
   }
 
+  request_routing_rule {
+    name                        = "http-to-https-redirect-dev"
+    http_listener_name          = local.http_listeners[0].http_listener_name
+    rule_type                   = "Basic"
+    priority                    = 30
+    redirect_configuration_name = "redirect-http-to-https-config-dev"
+  }
+
+  redirect_configuration {
+    name                 = "redirect-http-to-https-config-dev"
+    target_listener_name = local.https_listeners[0].https_listener_name
+    redirect_type        = "Permanent"
+    include_path         = true
+    include_query_string = true
+  }
+
   dynamic "probe" {
     for_each = local.https_routing_settings
     content {

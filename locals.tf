@@ -61,11 +61,11 @@ locals {
 
   http_listeners = [
     {
-      http_listener_name    = "http-listener-dev"
+      http_listener_name     = "http-listener-dev"
       custom_cloudflare_fqdn = local.custom_cloudflare_dev_fqdn
     },
     {
-      http_listener_name    = "http-listener-qa"
+      http_listener_name     = "http-listener-qa"
       custom_cloudflare_fqdn = local.custom_cloudflare_qa_fqdn
     }
   ]
