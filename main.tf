@@ -121,7 +121,7 @@ resource "azurerm_application_gateway" "main" {
   dynamic "request_routing_rule" {
     for_each = local.https_routing_settings
     content {
-      name                       = request_routing_rule.value.request_routing_rule_name
+      name                       = request_routing_rule.value.https_rule_name
       rule_type                  = request_routing_rule.value.rule_type
       http_listener_name         = request_routing_rule.value.https_listener_name
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name

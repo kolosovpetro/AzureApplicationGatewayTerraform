@@ -30,32 +30,32 @@ locals {
   https_routing_settings = [
     {
       environment               = "dev"
-      request_routing_rule_name = "https-rule-dev"
+      https_rule_name           = "https-rule-dev"
       rule_type                 = "Basic"
       appservice_default_fqdn   = local.app_service_dev_default_fqdn
       backend_address_pool_name = "backend-pool-dev"
       priority                  = 10
-      https_listener_name        = "https-listener-dev"
+      https_listener_name       = local.https_listeners[0].https_listener_name
     },
     {
       environment               = "qa"
-      request_routing_rule_name = "https-rule-qa"
+      https_rule_name           = "https-rule-qa"
       rule_type                 = "Basic"
       backend_address_pool_name = "backend-pool-qa"
       priority                  = 20
       appservice_default_fqdn   = local.app_service_qa_default_fqdn
-      https_listener_name        = "https-listener-qa"
+      https_listener_name       = local.https_listeners[1].https_listener_name
     }
   ]
-  
+
   https_listeners = [
     {
-      https_listener_name        = "https-listener-dev"
-      custom_cloudflare_fqdn    = local.custom_cloudflare_dev_fqdn
+      https_listener_name    = "https-listener-dev"
+      custom_cloudflare_fqdn = local.custom_cloudflare_dev_fqdn
     },
     {
-      https_listener_name        = "https-listener-qa"
-      custom_cloudflare_fqdn    = local.custom_cloudflare_qa_fqdn
+      https_listener_name    = "https-listener-qa"
+      custom_cloudflare_fqdn = local.custom_cloudflare_qa_fqdn
     }
   ]
 }
