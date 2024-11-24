@@ -60,8 +60,13 @@ resource "azurerm_application_gateway" "main" {
   }
 
   frontend_port {
-    name = local.frontend_port_name
+    name = local.frontend_https_port_name
     port = 443
+  }
+
+  frontend_port {
+    name = local.frontend_http_port_name
+    port = 80
   }
 
   frontend_ip_configuration {
@@ -100,7 +105,7 @@ resource "azurerm_application_gateway" "main" {
     content {
       name                           = http_listener.value.http_listener_name
       frontend_ip_configuration_name = local.frontend_ip_configuration_name
-      frontend_port_name             = local.frontend_port_name
+      frontend_port_name             = local.frontend_https_port_name
       protocol                       = "Https"
       ssl_certificate_name           = local.ssl_certificate_name
       host_name                      = http_listener.value.custom_cloudflare_fqdn

@@ -17,7 +17,8 @@ locals {
   app_service_qa_name          = "ase-qa-${var.prefix}"
   app_service_qa_default_fqdn  = "ase-qa-${var.prefix}.azurewebsites.net"
 
-  frontend_port_name             = "front-port-443"
+  frontend_https_port_name       = "front-port-443"
+  frontend_http_port_name        = "front-port-80"
   frontend_ip_configuration_name = "front-ip-config-${var.prefix}"
   backend_https_settings_name    = "backend-https-settings-${var.prefix}"
   backend_http_settings_name     = "backend-http-settings-${var.prefix}"
