@@ -19,6 +19,7 @@ locals {
 
   frontend_port_name             = "front-port-443"
   frontend_ip_configuration_name = "front-ip-config-${var.prefix}"
+  backend_https_settings_name    = "backend-https-settings-${var.prefix}"
   backend_http_settings_name     = "backend-http-settings-${var.prefix}"
   ssl_certificate_name           = "razumovsky.me.pfx"
   domain_name                    = "razumovsky.me"

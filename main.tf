@@ -78,10 +78,19 @@ resource "azurerm_application_gateway" "main" {
   }
 
   backend_http_settings {
-    name                                = local.backend_http_settings_name
+    name                                = local.backend_https_settings_name
     cookie_based_affinity               = "Disabled"
     port                                = 443
     protocol                            = "Https"
+    request_timeout                     = 300
+    pick_host_name_from_backend_address = true
+  }
+
+  backend_http_settings {
+    name                                = local.backend_http_settings_name
+    cookie_based_affinity               = "Disabled"
+    port                                = 80
+    protocol                            = "Http"
     request_timeout                     = 300
     pick_host_name_from_backend_address = true
   }
@@ -111,7 +120,7 @@ resource "azurerm_application_gateway" "main" {
       rule_type                  = request_routing_rule.value.rule_type
       http_listener_name         = request_routing_rule.value.http_listener_name
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
-      backend_http_settings_name = local.backend_http_settings_name
+      backend_http_settings_name = local.backend_https_settings_name
       priority                   = request_routing_rule.value.priority
     }
   }
