@@ -13,11 +13,10 @@ locals {
   frontend_port_name             = "front-port-443"
   frontend_ip_configuration_name = "front-ip-config-${var.prefix}"
   backend_http_settings_name     = "backend-http-settings-${var.prefix}"
-  http_listener_name             = "http-listener-${var.prefix}"
-  ssl_certificate_name           = "agwy.test.razumovsky.me.pfx"
+  ssl_certificate_name           = "razumovsky.me.pfx"
   domain_name                    = "razumovsky.me"
-  dev_dns                        = "agwy.dev.${local.domain_name}"
-  qa_dns                         = "agwy.qa.${local.domain_name}"
+  dev_dns                        = "agwy-dev.${local.domain_name}"
+  qa_dns                         = "agwy-qa.${local.domain_name}"
 
   routing_settings = [
     {

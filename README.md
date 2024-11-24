@@ -4,8 +4,8 @@
 
 ## DEV
 
-- https://agwy.dev.razumovsky.me
+- https://agwy-dev.razumovsky.me
 
 ## QA
 
-- https://agwy.qa.razumovsky.me
+- https://agwy-qa.razumovsky.me
