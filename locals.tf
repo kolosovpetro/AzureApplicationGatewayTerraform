@@ -27,26 +27,35 @@ locals {
   custom_cloudflare_dev_fqdn     = "agwy-dev.${local.domain_name}"
   custom_cloudflare_qa_fqdn      = "agwy-qa.${local.domain_name}"
 
-  routing_settings = [
+  https_routing_settings = [
     {
       environment               = "dev"
       request_routing_rule_name = "https-rule-dev"
       rule_type                 = "Basic"
-      http_listener_name        = "https-listener-dev"
+      appservice_default_fqdn   = local.app_service_dev_default_fqdn
       backend_address_pool_name = "backend-pool-dev"
       priority                  = 10
-      custom_cloudflare_fqdn    = local.custom_cloudflare_dev_fqdn
-      appservice_default_fqdn   = local.app_service_dev_default_fqdn
+      https_listener_name        = "https-listener-dev"
     },
     {
       environment               = "qa"
       request_routing_rule_name = "https-rule-qa"
       rule_type                 = "Basic"
-      http_listener_name        = "https-listener-qa"
       backend_address_pool_name = "backend-pool-qa"
       priority                  = 20
-      custom_cloudflare_fqdn    = local.custom_cloudflare_qa_fqdn
       appservice_default_fqdn   = local.app_service_qa_default_fqdn
+      https_listener_name        = "https-listener-qa"
+    }
+  ]
+  
+  https_listeners = [
+    {
+      https_listener_name        = "https-listener-dev"
+      custom_cloudflare_fqdn    = local.custom_cloudflare_dev_fqdn
+    },
+    {
+      https_listener_name        = "https-listener-qa"
+      custom_cloudflare_fqdn    = local.custom_cloudflare_qa_fqdn
     }
   ]
 }

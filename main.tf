@@ -75,7 +75,7 @@ resource "azurerm_application_gateway" "main" {
   }
 
   dynamic "backend_address_pool" {
-    for_each = local.routing_settings
+    for_each = local.https_routing_settings
     content {
       name  = backend_address_pool.value.backend_address_pool_name
       fqdns = [backend_address_pool.value.appservice_default_fqdn]
@@ -101,14 +101,14 @@ resource "azurerm_application_gateway" "main" {
   }
 
   dynamic "http_listener" {
-    for_each = local.routing_settings
+    for_each = local.https_listeners
     content {
-      name                           = http_listener.value.http_listener_name
+      name                           = http_listener.value.https_listener_name
+      host_name                      = http_listener.value.custom_cloudflare_fqdn
       frontend_ip_configuration_name = local.frontend_ip_configuration_name
       frontend_port_name             = local.frontend_https_port_name
       protocol                       = "Https"
       ssl_certificate_name           = local.ssl_certificate_name
-      host_name                      = http_listener.value.custom_cloudflare_fqdn
     }
   }
 
@@ -119,11 +119,11 @@ resource "azurerm_application_gateway" "main" {
   }
 
   dynamic "request_routing_rule" {
-    for_each = local.routing_settings
+    for_each = local.https_routing_settings
     content {
       name                       = request_routing_rule.value.request_routing_rule_name
       rule_type                  = request_routing_rule.value.rule_type
-      http_listener_name         = request_routing_rule.value.http_listener_name
+      http_listener_name         = request_routing_rule.value.https_listener_name
       backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
       backend_http_settings_name = local.backend_https_settings_name
       priority                   = request_routing_rule.value.priority
@@ -131,7 +131,7 @@ resource "azurerm_application_gateway" "main" {
   }
 
   dynamic "probe" {
-    for_each = local.routing_settings
+    for_each = local.https_routing_settings
     content {
       name                                      = "probe-${probe.value.environment}"
       protocol                                  = "Https"
