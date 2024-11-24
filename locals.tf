@@ -69,4 +69,15 @@ locals {
       custom_cloudflare_fqdn = local.custom_cloudflare_qa_fqdn
     }
   ]
+
+  http_routing_rules = [
+    {
+      http_rule_name              = "http-to-https-redirect-dev"
+      http_listener_name          = local.http_listeners[0].http_listener_name
+      rule_type                   = "Basic"
+      priority                    = 30
+      redirect_configuration_name = "redirect-http-to-https-config-dev"
+      target_listener_name        = local.https_listeners[0].https_listener_name
+    }
+  ]
 }

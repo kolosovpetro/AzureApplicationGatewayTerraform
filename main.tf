@@ -141,20 +141,26 @@ resource "azurerm_application_gateway" "main" {
     }
   }
 
-  request_routing_rule {
-    name                        = "http-to-https-redirect-dev"
-    http_listener_name          = local.http_listeners[0].http_listener_name
-    rule_type                   = "Basic"
-    priority                    = 30
-    redirect_configuration_name = "redirect-http-to-https-config-dev"
+  dynamic "request_routing_rule" {
+    for_each = local.http_routing_rules
+    content {
+      name                        = request_routing_rule.value.http_rule_name
+      http_listener_name          = request_routing_rule.value.http_listener_name
+      rule_type                   = request_routing_rule.value.rule_type
+      priority                    = request_routing_rule.value.priority
+      redirect_configuration_name = request_routing_rule.value.redirect_configuration_name
+    }
   }
 
-  redirect_configuration {
-    name                 = "redirect-http-to-https-config-dev"
-    target_listener_name = local.https_listeners[0].https_listener_name
-    redirect_type        = "Permanent"
-    include_path         = true
-    include_query_string = true
+  dynamic "redirect_configuration" {
+    for_each = local.http_routing_rules
+    content {
+      name                 = redirect_configuration.value.redirect_configuration_name
+      target_listener_name = redirect_configuration.value.target_listener_name
+      redirect_type        = "Permanent"
+      include_path         = true
+      include_query_string = true
+    }
   }
 
   dynamic "probe" {
