@@ -1,13 +1,15 @@
 output "dev_urls" {
   value = {
     ip         = azurerm_public_ip.app_gateway_front_ip.ip_address
-    fqdn       = local.dev_dns
+    fqdn       = local.custom_cloudflare_dev_fqdn
+    https_link = "https://${local.custom_cloudflare_dev_fqdn}"
   }
 }
 
 output "qa_urls" {
   value = {
     ip         = azurerm_public_ip.app_gateway_front_ip.ip_address
-    fqdn       = local.qa_dns
+    fqdn       = local.custom_cloudflare_qa_fqdn
+    https_link = "https://${local.custom_cloudflare_qa_fqdn}"
   }
 }

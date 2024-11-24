@@ -73,7 +73,7 @@ resource "azurerm_application_gateway" "main" {
     for_each = local.routing_settings
     content {
       name  = backend_address_pool.value.backend_address_pool_name
-      fqdns = [backend_address_pool.value.default_host_name]
+      fqdns = [backend_address_pool.value.appservice_default_fqdn]
     }
   }
 
@@ -94,7 +94,7 @@ resource "azurerm_application_gateway" "main" {
       frontend_port_name             = local.frontend_port_name
       protocol                       = "Https"
       ssl_certificate_name           = local.ssl_certificate_name
-      host_name                      = http_listener.value.host_name
+      host_name                      = http_listener.value.custom_cloudflare_fqdn
     }
   }
 
@@ -125,7 +125,7 @@ resource "azurerm_application_gateway" "main" {
       interval                                  = 30
       timeout                                   = 30
       unhealthy_threshold                       = 3
-      host                                      = probe.value.default_host_name
+      host                                      = probe.value.appservice_default_fqdn
       pick_host_name_from_backend_http_settings = false
       match {
         status_code = [200, 399]
