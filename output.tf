@@ -1,7 +1,13 @@
-output "application_gateway_public_ip" {
+output "dev_urls" {
   value = {
     ip         = azurerm_public_ip.app_gateway_front_ip.ip_address
-    sub_domain = "agwy.test"
-    fqdn       = "https://agwy.test.razumovsky.me"
+    fqdn       = local.dev_dns
+  }
+}
+
+output "qa_urls" {
+  value = {
+    ip         = azurerm_public_ip.app_gateway_front_ip.ip_address
+    fqdn       = local.qa_dns
   }
 }
