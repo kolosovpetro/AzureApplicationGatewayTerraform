@@ -1,9 +1,7 @@
 # Azure Application Gateway
 
-This repository demonstrates the deployment of an Azure Application Gateway using Terraform.
-It includes configuration for SSL settings, backend pools with Azure App Services,
-and redirection of HTTP traffic to HTTPS on behalf of Application gateway.
-Additionally, Cloudflare DNS records are dynamically created using a specified Terraform provider.
+Terraform repository for deploying Azure Application Gateway with backend pools of Azure App Services. Supports HTTPS
+via TLS certificate. Automates DNS configuration using PowerShell scripts and Cloudflare.
 
 ## DEV
 
@@ -28,9 +26,12 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 - **Frontend Port** - Defines a port that accepts incoming HTTP or HTTPS requests to application gateway
 - **Backend Pool** - A list of IP addresses or FQDN where incoming HTTPS or HTTPS traffic is being forwarded
 - **HTTP Listener** - A component that checks for incoming HTTP or HTTPS requests on a specified Frontend IP and Port.
-It determines how requests are processed based on its configuration, which includes Hostname, Protocol, and SSL settings
-- **Backend HTTP Settings** - Defines how application gateway sends incoming traffic to backend servers, by setting up a Protocol, Backend port and Timeout interval
-- **Routing Rules** - Defines how incoming requests are forwarded to backend targets. They link HTTP Listeners to Backend Pools by specifying the appropriate Backend HTTP settings
+  It determines how requests are processed based on its configuration, which includes Hostname, Protocol, and SSL
+  settings
+- **Backend HTTP Settings** - Defines how application gateway sends incoming traffic to backend servers, by setting up a
+  Protocol, Backend port and Timeout interval
+- **Routing Rules** - Defines how incoming requests are forwarded to backend targets. They link HTTP Listeners to
+  Backend Pools by specifying the appropriate Backend HTTP settings
 - **Health Probe** - Ensures that traffic is delivered only to healthy backend servers
 
 ## Azure Application Gateway architecture
