@@ -15,3 +15,7 @@ output "qa_urls" {
     http_link  = "http://${local.app_services.qa.custom_cloudflare_fqdn}"
   }
 }
+
+output "gateway_frontend_ip" {
+  value = azurerm_public_ip.app_gateway_front_ip.ip_address
+}

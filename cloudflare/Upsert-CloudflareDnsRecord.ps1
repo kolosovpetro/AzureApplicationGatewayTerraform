@@ -32,12 +32,14 @@ param (
 
     [Parameter(Mandatory = $true)]
     [string]$ZoneName,
-    
+
     [Parameter(Mandatory = $true)]
     [Hashtable]$NewDnsEntriesHashtable
 )
 
 $ErrorActionPreference = "Stop"
+
+Set-Location $PSScriptRoot
 
 Write-Host "Starting Cloudflare DNS Records Update Script..." -ForegroundColor Cyan
 Write-Host "Fetching Zone ID for Zone Name: $ZoneName..." -ForegroundColor Yellow

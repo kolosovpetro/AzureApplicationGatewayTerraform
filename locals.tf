@@ -4,13 +4,13 @@ locals {
       name                   = "ase-dev-${var.prefix}"
       location               = "northeurope"
       default_fqdn           = "ase-dev-${var.prefix}.azurewebsites.net"
-      custom_cloudflare_fqdn = "agwy-dev.${local.domain_name}"
+      custom_cloudflare_fqdn = "agwy-dev.razumovsky.me"
     }
     qa = {
       name                   = "ase-qa-${var.prefix}"
       location               = "northeurope"
       default_fqdn           = "ase-qa-${var.prefix}.azurewebsites.net"
-      custom_cloudflare_fqdn = "agwy-qa.${local.domain_name}"
+      custom_cloudflare_fqdn = "agwy-qa.razumovsky.me"
     }
   }
 
@@ -20,7 +20,6 @@ locals {
   backend_https_settings_name    = "backend-https-settings-${var.prefix}"
   backend_http_settings_name     = "backend-http-settings-${var.prefix}"
   ssl_certificate_name           = "razumovsky.me.pfx"
-  domain_name                    = "razumovsky.me"
 
   https_routing_settings = [
     {
