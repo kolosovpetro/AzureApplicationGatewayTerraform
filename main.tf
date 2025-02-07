@@ -1,7 +1,15 @@
+#################################################################################################################
+# RESOURCE GROUP
+#################################################################################################################
+
 resource "azurerm_resource_group" "rg_app_gateway" {
   name     = "rg-app-gateway-${var.prefix}"
   location = "northeurope"
 }
+
+#################################################################################################################
+# VIRTUAL NETWORK & GATEWAY SUBNET
+#################################################################################################################
 
 resource "azurerm_virtual_network" "public" {
   name                = "vnet-${var.prefix}"
@@ -10,6 +18,17 @@ resource "azurerm_virtual_network" "public" {
   resource_group_name = azurerm_resource_group.rg_app_gateway.name
 }
 
+resource "azurerm_subnet" "app_gateway_subnet" {
+  name                 = "subnet-agwy-${var.prefix}"
+  resource_group_name  = azurerm_resource_group.rg_app_gateway.name
+  virtual_network_name = azurerm_virtual_network.public.name
+  address_prefixes     = ["10.0.0.128/26"]
+}
+
+#################################################################################################################
+# APP SERVICE PLAN
+#################################################################################################################
+
 resource "azurerm_service_plan" "service_plan" {
   name                = "asp-dev-qa-${var.prefix}"
   resource_group_name = azurerm_resource_group.rg_app_gateway.name
@@ -17,6 +36,10 @@ resource "azurerm_service_plan" "service_plan" {
   sku_name            = "B2"
   os_type             = "Windows"
 }
+
+#################################################################################################################
+# APP SERVICES
+#################################################################################################################
 
 resource "azurerm_windows_web_app" "app_service_dev" {
   for_each            = local.app_services
@@ -28,6 +51,10 @@ resource "azurerm_windows_web_app" "app_service_dev" {
   site_config {}
 }
 
+#################################################################################################################
+# APP GATEWAY FRONTEND IP
+#################################################################################################################
+
 resource "azurerm_public_ip" "app_gateway_front_ip" {
   name                = "pip-agwy-front-ip-${var.prefix}"
   location            = azurerm_resource_group.rg_app_gateway.location
@@ -36,12 +63,9 @@ resource "azurerm_public_ip" "app_gateway_front_ip" {
   sku                 = "Standard"
 }
 
-resource "azurerm_subnet" "app_gateway_subnet" {
-  name                 = "subnet-agwy-${var.prefix}"
-  resource_group_name  = azurerm_resource_group.rg_app_gateway.name
-  virtual_network_name = azurerm_virtual_network.public.name
-  address_prefixes     = ["10.0.0.128/26"]
-}
+#################################################################################################################
+# APP GATEWAY
+#################################################################################################################
 
 resource "azurerm_application_gateway" "main" {
   name                = "agwy-${var.prefix}"
@@ -54,9 +78,9 @@ resource "azurerm_application_gateway" "main" {
     capacity = 2
   }
 
-  gateway_ip_configuration {
-    name      = "agwy-ipc-${var.prefix}"
-    subnet_id = azurerm_subnet.app_gateway_subnet.id
+  frontend_ip_configuration {
+    name                 = local.frontend_ip_configuration_name
+    public_ip_address_id = azurerm_public_ip.app_gateway_front_ip.id
   }
 
   frontend_port {
@@ -69,9 +93,9 @@ resource "azurerm_application_gateway" "main" {
     port = 80
   }
 
-  frontend_ip_configuration {
-    name                 = local.frontend_ip_configuration_name
-    public_ip_address_id = azurerm_public_ip.app_gateway_front_ip.id
+  gateway_ip_configuration {
+    name      = "agwy-ipc-${var.prefix}"
+    subnet_id = azurerm_subnet.app_gateway_subnet.id
   }
 
   dynamic "backend_address_pool" {
@@ -179,9 +203,4 @@ resource "azurerm_application_gateway" "main" {
       }
     }
   }
-}
-
-resource "azurerm_subnet_network_security_group_association" "example_assoc" {
-  subnet_id                 = azurerm_subnet.app_gateway_subnet.id
-  network_security_group_id = azurerm_network_security_group.public.id
 }
