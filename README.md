@@ -15,16 +15,6 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 - https://agwy-qa.razumovsky.me
 - http://agwy-qa.razumovsky.me
 
-## Features of Azure Application Gateway
-
-- **Azure Application Gateway**:
-    - Provides HTTPS connection to app services backend node pools
-    - Supports routing rules to redirect HTTP (port 80) traffic to HTTPS (port 443) for improved security.
-
-- **Cloudflare Integration**:
-    - Automatically creates and manages DNS records via the Cloudflare Terraform provider,
-      ensuring streamlined domain management.
-
 ## Steps to configure Azure Application Gateway
 
 - Deploy virtual network

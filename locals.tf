@@ -26,9 +26,9 @@ locals {
       environment               = "dev"
       https_rule_name           = "https-rule-dev"
       rule_type                 = "Basic"
-      appservice_default_fqdn   = local.app_services.dev.custom_cloudflare_fqdn
       backend_address_pool_name = "backend-pool-dev"
       priority                  = 10
+      appservice_default_fqdn   = local.app_services.dev.default_fqdn
       https_listener_name       = local.https_listeners[0].https_listener_name
     },
     {
@@ -37,7 +37,7 @@ locals {
       rule_type                 = "Basic"
       backend_address_pool_name = "backend-pool-qa"
       priority                  = 20
-      appservice_default_fqdn   = local.app_services.qa.custom_cloudflare_fqdn
+      appservice_default_fqdn   = local.app_services.qa.default_fqdn
       https_listener_name       = local.https_listeners[1].https_listener_name
     }
   ]
