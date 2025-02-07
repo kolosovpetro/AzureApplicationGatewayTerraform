@@ -1,8 +1,25 @@
+#################################################################################################################
+# NETWORK SECURITY GROUP
+#################################################################################################################
+
 resource "azurerm_network_security_group" "public" {
   name                = "nsg-agwy-${var.prefix}"
   location            = azurerm_resource_group.rg_app_gateway.location
   resource_group_name = azurerm_resource_group.rg_app_gateway.name
 }
+
+#################################################################################################################
+# NETWORK SECURITY GROUP ASSOCIATION WITH GATEWAY SUBNET
+#################################################################################################################
+
+resource "azurerm_subnet_network_security_group_association" "nsg_app_gateway_association" {
+  subnet_id                 = azurerm_subnet.app_gateway_subnet.id
+  network_security_group_id = azurerm_network_security_group.public.id
+}
+
+#################################################################################################################
+# NETWORK SECURITY RULES
+#################################################################################################################
 
 resource "azurerm_network_security_rule" "allow_ssh" {
   name                        = "AllowSSH"
