@@ -78,9 +78,9 @@ resource "azurerm_application_gateway" "main" {
     capacity = 2
   }
 
-  gateway_ip_configuration {
-    name      = "agwy-ipc-${var.prefix}"
-    subnet_id = azurerm_subnet.app_gateway_subnet.id
+  frontend_ip_configuration {
+    name                 = local.frontend_ip_configuration_name
+    public_ip_address_id = azurerm_public_ip.app_gateway_front_ip.id
   }
 
   frontend_port {
@@ -93,9 +93,9 @@ resource "azurerm_application_gateway" "main" {
     port = 80
   }
 
-  frontend_ip_configuration {
-    name                 = local.frontend_ip_configuration_name
-    public_ip_address_id = azurerm_public_ip.app_gateway_front_ip.id
+  gateway_ip_configuration {
+    name      = "agwy-ipc-${var.prefix}"
+    subnet_id = azurerm_subnet.app_gateway_subnet.id
   }
 
   dynamic "backend_address_pool" {
