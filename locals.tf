@@ -1,16 +1,16 @@
 locals {
   app_services = {
     dev = {
-      name         = "ase-dev-${var.prefix}"
-      location     = "northeurope"
-      default_fqdn = "ase-dev-${var.prefix}.azurewebsites.net"
-        custom_cloudflare_fqdn     = "agwy-dev.${local.domain_name}"
+      name                   = "ase-dev-${var.prefix}"
+      location               = "northeurope"
+      default_fqdn           = "ase-dev-${var.prefix}.azurewebsites.net"
+      custom_cloudflare_fqdn = "agwy-dev.${local.domain_name}"
     }
     qa = {
-      name         = "ase-qa-${var.prefix}"
-      location     = "northeurope"
-      default_fqdn = "ase-qa-${var.prefix}.azurewebsites.net"
-        custom_cloudflare_fqdn      = "agwy-qa.${local.domain_name}"
+      name                   = "ase-qa-${var.prefix}"
+      location               = "northeurope"
+      default_fqdn           = "ase-qa-${var.prefix}.azurewebsites.net"
+      custom_cloudflare_fqdn = "agwy-qa.${local.domain_name}"
     }
   }
 
