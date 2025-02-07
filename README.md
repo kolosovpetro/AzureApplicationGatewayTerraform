@@ -20,6 +20,12 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 - https://learn.microsoft.com/en-us/azure/application-gateway/overview
 - https://quizlet.com/pl/975398961/azure-application-gateway-flash-cards/
 
+## Azure Application Gateway components
+
+## Azure Application Gateway architecture
+
+![gateway](./images/app-gateway-architecture.jpg)
+
 ## Steps to configure Azure Application Gateway
 
 - Deploy virtual network
