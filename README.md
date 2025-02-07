@@ -15,6 +15,11 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 - https://agwy-qa.razumovsky.me
 - http://agwy-qa.razumovsky.me
 
+## Docs
+
+- https://learn.microsoft.com/en-us/azure/application-gateway/overview
+- https://quizlet.com/pl/975398961/azure-application-gateway-flash-cards/
+
 ## Steps to configure Azure Application Gateway
 
 - Deploy virtual network
@@ -28,7 +33,3 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 - Add http and https listeners to the app gateway using `http_listener` block
 - Define routing rules to handle requests based on headers CN
 - Create a Cloudflare DNS record for the app gateway public IP and test connection
-
-## Docs
-
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_gateway
