@@ -5,7 +5,17 @@ It includes configuration for SSL settings, backend pools with Azure App Service
 and redirection of HTTP traffic to HTTPS on behalf of Application gateway.
 Additionally, Cloudflare DNS records are dynamically created using a specified Terraform provider.
 
-## Features
+## DEV
+
+- https://agwy-dev.razumovsky.me
+- http://agwy-dev.razumovsky.me
+
+## QA
+
+- https://agwy-qa.razumovsky.me
+- http://agwy-qa.razumovsky.me
+
+## Features of Azure Application Gateway
 
 - **Azure Application Gateway**:
     - Provides HTTPS connection to app services backend node pools
@@ -15,7 +25,7 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
     - Automatically creates and manages DNS records via the Cloudflare Terraform provider,
       ensuring streamlined domain management.
 
-## Steps to configure communication
+## Steps to configure Azure Application Gateway
 
 - Deploy virtual network
 - Deploy application gateway subnet
@@ -32,13 +42,3 @@ Additionally, Cloudflare DNS records are dynamically created using a specified T
 ## Docs
 
 - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_gateway
-
-## DEV
-
-- https://agwy-dev.razumovsky.me
-- http://agwy-dev.razumovsky.me
-
-## QA
-
-- https://agwy-qa.razumovsky.me
-- http://agwy-qa.razumovsky.me
