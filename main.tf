@@ -203,4 +203,12 @@ resource "azurerm_application_gateway" "main" {
       }
     }
   }
+
+  depends_on = [
+    azurerm_network_security_rule.allow_health_probe,
+    azurerm_network_security_rule.allow_https,
+    azurerm_network_security_rule.allow_http,
+    azurerm_network_security_rule.allow_ssh,
+    azurerm_subnet_network_security_group_association.nsg_app_gateway_association
+  ]
 }
